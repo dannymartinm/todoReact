@@ -9,6 +9,10 @@ import Subheader from "material-ui/Subheader";
 import Toggle from "material-ui/Toggle";
 
 export default class ListExampleNested extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.tasks;
+  }
   state = {
     open: false
   };
@@ -20,13 +24,14 @@ export default class ListExampleNested extends React.Component {
   };
 
   render() {
+    const { tasks } = this.props;
     return (
       <div>
         <br />
         <MobileTearSheet>
           <List>
             <Subheader>To Do List</Subheader>
-            {this.props.tasks.map(value => (
+            {tasks.map(value => (
               <ListItem
                 className="listHeader"
                 primaryText={value.name}
@@ -45,7 +50,7 @@ export default class ListExampleNested extends React.Component {
                 nestedItems={[
                   <ListItem
                     className="listsubHeader"
-                    key={1}
+                    key={value}
                     primaryText={value.description}
                   />
                 ]}
