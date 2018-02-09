@@ -69,7 +69,6 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to To Do App</h1>
         </header>
-        <h1>{this.state.tasks.length}</h1>
         <div className="formContainer">
           <MuiThemeProvider>
             <AddForm onNewTask={this.addTask} />

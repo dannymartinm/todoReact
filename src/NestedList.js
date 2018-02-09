@@ -31,10 +31,10 @@ export default class ListExampleNested extends React.Component {
         <MobileTearSheet>
           <List>
             <Subheader>To Do List</Subheader>
-            {tasks.map(value => (
+            {tasks.map(task => (
               <ListItem
                 className="listHeader"
-                primaryText={value.name}
+                primaryText={task.name}
                 leftIcon={
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +50,8 @@ export default class ListExampleNested extends React.Component {
                 nestedItems={[
                   <ListItem
                     className="listsubHeader"
-                    key={value}
-                    primaryText={value.description}
+                    key={task}
+                    primaryText={task.description}
                   />
                 ]}
               />
