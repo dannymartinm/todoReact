@@ -79,7 +79,6 @@ class App extends Component {
             <NestedList tasks={tasks} />
           </MuiThemeProvider>
         </div>
-        <TaskList tasks={tasks} />
       </div>
     );
   }
