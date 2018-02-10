@@ -7,6 +7,7 @@ import Task from "./Task";
 import NestedList from "./NestedList";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AddForm from "./AddForm";
+import DurationList from "./DurationList";
 
 const style = {
   margin: 12
@@ -37,13 +38,28 @@ class App extends Component {
           description: "Identify Components",
           duration: 1800,
           timeElapsed: 0
+        }
+        // },
+        // {
+        //   id: 4,
+        //   name: "Task 4",
+        //   description: "Add material-ui",
+        //   duration: 1200,
+        //   timeElapsed: 0
+        // }
+      ],
+      durations: [
+        {
+          name: "Short",
+          seconds: 1800
         },
         {
-          id: 4,
-          name: "Task 4",
-          description: "Add material-ui",
-          duration: 1200,
-          timeElapsed: 0
+          name: "Medium",
+          seconds: 3600
+        },
+        {
+          name: "Long",
+          seconds: 7200
         }
       ]
     };
@@ -63,6 +79,7 @@ class App extends Component {
   }
   render() {
     const { tasks } = this.state;
+    const { durations } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -74,9 +91,14 @@ class App extends Component {
             <AddForm onNewTask={this.addTask} />
           </MuiThemeProvider>
         </div>
-        <div className="listContainer">
+        {/* <div className="listContainer">
           <MuiThemeProvider>
             <NestedList tasks={tasks} />
+          </MuiThemeProvider>
+        </div> */}
+        <div>
+          <MuiThemeProvider>
+            <DurationList durations={durations} />
           </MuiThemeProvider>
         </div>
       </div>
