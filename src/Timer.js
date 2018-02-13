@@ -3,7 +3,7 @@ import React from "react";
 class Timer extends React.Component {
   state = {
     currentT: 0,
-    duration: 5400,
+    duration: this.props.duration,
     interval: null,
     initialTime: null
   };
@@ -53,9 +53,13 @@ class Timer extends React.Component {
     const minutes = Math.floor((counter % 3600) / 60);
     const seconds = Math.floor((counter % 3600) % 60);
 
-    return `${hours < 10 ? "0" + hours : hours} : ${
-      minutes < 10 ? "0" + minutes : minutes
-    } : ${seconds < 10 ? "0" + seconds : seconds}`;
+    const formatTime = num => {
+      return `${num < 10 ? `0${num}` : num}`;
+    };
+
+    return `${formatTime(hours)} : ${formatTime(minutes)}: ${formatTime(
+      seconds
+    )}`;
   };
 
   render() {

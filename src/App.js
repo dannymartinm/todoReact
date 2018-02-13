@@ -22,31 +22,20 @@ class App extends Component {
           id: 1,
           name: "Task 1",
           description: "Read React Documentation",
-          duration: 3600,
-          timeElapsed: 0
+          duration: 1200
         },
         {
           id: 2,
           name: "Task 2",
           description: "Do Use Cases Diagrams",
-          duration: 3600,
-          timeElapsed: 0
+          duration: 5400
         },
         {
           id: 3,
           name: "Task 3",
           description: "Identify Components",
-          duration: 1800,
-          timeElapsed: 0
+          duration: 2700
         }
-        // },
-        // {
-        //   id: 4,
-        //   name: "Task 4",
-        //   description: "Add material-ui",
-        //   duration: 1200,
-        //   timeElapsed: 0
-        // }
       ],
       durations: [
         {
@@ -69,12 +58,11 @@ class App extends Component {
 
   addTask(name, description, duration) {
     const id = this.state.tasks.length + 1;
-    const timeElapsed = 0;
 
-    const tasks = [
-      ...this.state.tasks,
-      { id, name, description, duration, timeElapsed }
-    ];
+    if (duration === undefined) {
+      duration = this.state.durations[0].seconds;
+    }
+    const tasks = [...this.state.tasks, { id, name, description, duration }];
     this.setState({ tasks });
   }
   render() {

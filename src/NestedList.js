@@ -55,7 +55,7 @@ export default class ListExampleNested extends React.Component {
                     key={1}
                     primaryText={task.description}
                   />,
-                  <Timer />
+                  <Timer duration={task.duration} />
                 ]}
               />
             ))}

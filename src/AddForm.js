@@ -5,8 +5,7 @@ import DurationList from "./DurationList";
 const emptyTask = {
   name: "",
   description: "",
-  duration: undefined,
-  timeElapsed: 0
+  duration: undefined
 };
 
 class AddForm extends React.Component {
@@ -30,6 +29,11 @@ class AddForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleDurationChange = duration => {
+    this.setState({
+      duration
+    });
+  };
   handleSubmit = e => {
     e.preventDefault();
 
@@ -44,6 +48,7 @@ class AddForm extends React.Component {
     const { durations } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
+        <div>{/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}</div>
         <h2 className="titleForm">New Task </h2>
         <TextField
           id="text-field"
@@ -68,11 +73,13 @@ class AddForm extends React.Component {
           name="duration"
           type="text"
           durations={durations}
-          onChange={this.handleChange}
+          onChange={this.handleDurationChange}
           value={duration}
         />
         <br />
-        <button className="formButton">Add</button>
+        <button className="formButton" type="submit">
+          Add
+        </button>
       </form>
     );
   }

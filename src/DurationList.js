@@ -2,22 +2,23 @@ import React, { Component } from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 
-import FontIcon from "material-ui/FontIcon";
-import { fullWhite } from "material-ui/styles/colors";
-import plusIcon from "./timerIcon.svg";
-
-const buttonStyle = {
-  margin: 12
-};
-
 export default class DurationList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = this.durations;
-  }
-  state = { value: 1 };
+  state = {
+    value: null
+  };
 
-  handleChange = (event, index, value) => this.setState({ value });
+  handleChange = (event, index, value) => {
+    const { seconds } = this.props.durations[index];
+    this.props.onChange(seconds);
+    this.setState({ value });
+    // console.log(value);
+  };
+
+  componentDidMount() {
+    this.setState({
+      value: this.props.durations[0].name
+    });
+  }
 
   minutesConverter(seconds) {
     let minutes = 0;
@@ -25,20 +26,33 @@ export default class DurationList extends Component {
     minutes = seconds / 60;
     return minutes;
   }
+
+  handleDuration = secs => {
+    this.setState(
+      {
+        duration: secs
+      },
+      () => {
+        console.log(this.state.duration);
+      }
+    );
+  };
+
   render() {
     const { durations } = this.props;
+
     return (
       <div>
         <SelectField
           floatingLabelText="Duration"
-          value={1}
+          value={this.state.value}
           onChange={this.handleChange}
         >
-          {durations.map(duration => (
+          {durations.map(d => (
             <MenuItem
-              value={1}
-              primaryText={duration.name}
-              secondaryText={this.minutesConverter(duration.seconds) + "min"}
+              value={d.name}
+              primaryText={d.name}
+              secondaryText={this.minutesConverter(d.seconds) + "min"}
             />
           ))}
         </SelectField>
