@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
-import FlatButton from "material-ui/FlatButton";
+
 import FontIcon from "material-ui/FontIcon";
 import { fullWhite } from "material-ui/styles/colors";
 import plusIcon from "./timerIcon.svg";
@@ -41,13 +41,6 @@ export default class DurationList extends Component {
               secondaryText={this.minutesConverter(duration.seconds) + "min"}
             />
           ))}
-          <FlatButton
-            href={plusIcon}
-            target="_blank"
-            secondary={true}
-            icon={<FontIcon src={plusIcon} />}
-            style={buttonStyle}
-          />
         </SelectField>
         <br />
       </div>

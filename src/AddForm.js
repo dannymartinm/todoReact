@@ -1,5 +1,6 @@
 import React from "react";
 import TextField from "material-ui/TextField";
+import DurationList from "./DurationList";
 
 const emptyTask = {
   name: "",
@@ -9,9 +10,11 @@ const emptyTask = {
 };
 
 class AddForm extends React.Component {
-  state = {
-    ...emptyTask
-  };
+  constructor(props) {
+    super(props);
+    this.state = this.durations;
+    this.state = { ...emptyTask };
+  }
 
   componentDidMount() {
     this.setState(this.props.task);
@@ -29,18 +32,19 @@ class AddForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.name);
+
     const { name, description, duration } = this.state;
     this.props.onNewTask(name, description, duration);
 
     this.setState(emptyTask);
   };
+
   render() {
     const { name, description, duration } = this.state;
+    const { durations } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
         <h2 className="titleForm">New Task </h2>
-
         <TextField
           id="text-field"
           placeholder="Task name"
@@ -48,8 +52,8 @@ class AddForm extends React.Component {
           type="text"
           name="name"
           value={name}
-          // required
         />
+
         <br />
         <TextField
           id="text-field"
@@ -58,16 +62,14 @@ class AddForm extends React.Component {
           onChange={this.handleChange}
           type="text"
           value={description}
-          //  required
         />
         <br />
-        <TextField
-          id="text-field"
-          placeholder="Duration"
-          onChange={this.handleChange}
+        <DurationList
+          name="duration"
           type="text"
+          durations={durations}
+          onChange={this.handleChange}
           value={duration}
-          //  required
         />
         <br />
         <button className="formButton">Add</button>

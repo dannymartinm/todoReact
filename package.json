@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "material-ui": "^0.20.0",
-    "material-ui-next": "npm:material-ui@next",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0",

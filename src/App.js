@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import logo from "./todocheck.png";
 import "./App.css";
 import TaskList from "./TaskList";
-import ExampleList from "./ExampleList";
 import Task from "./Task";
 import NestedList from "./NestedList";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AddForm from "./AddForm";
 import DurationList from "./DurationList";
+import Timer from "./Timer";
 
 const style = {
   margin: 12
@@ -88,17 +88,13 @@ class App extends Component {
         </header>
         <div className="formContainer">
           <MuiThemeProvider>
-            <AddForm onNewTask={this.addTask} />
+            <AddForm onNewTask={this.addTask} durations={durations} />
           </MuiThemeProvider>
         </div>
-        {/* <div className="listContainer">
+
+        <div className="listContainer">
           <MuiThemeProvider>
             <NestedList tasks={tasks} />
-          </MuiThemeProvider>
-        </div> */}
-        <div>
-          <MuiThemeProvider>
-            <DurationList durations={durations} />
           </MuiThemeProvider>
         </div>
       </div>

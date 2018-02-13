@@ -7,6 +7,8 @@ import ContentDrafts from "material-ui/svg-icons/content/drafts";
 import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
 import Toggle from "material-ui/Toggle";
+import DurationList from "./DurationList";
+import Timer from "./Timer";
 
 export default class ListExampleNested extends React.Component {
   constructor(props) {
@@ -52,7 +54,8 @@ export default class ListExampleNested extends React.Component {
                     className="listsubHeader"
                     key={1}
                     primaryText={task.description}
-                  />
+                  />,
+                  <Timer />
                 ]}
               />
             ))}
