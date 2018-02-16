@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import logo from "./todocheck.png";
 import "./App.css";
-import TaskList from "./TaskList";
-import Task from "./Task";
 import NestedList from "./NestedList";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AddForm from "./AddForm";
-import DurationList from "./DurationList";
-import Timer from "./Timer";
 
 const style = {
   margin: 12

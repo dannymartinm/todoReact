@@ -44,6 +44,10 @@
   text-align: left;
 }
 
+.iconButton {
+  border: none;
+}
+
 /* body {
   font-family: "Roboto", sans-serif;
 }

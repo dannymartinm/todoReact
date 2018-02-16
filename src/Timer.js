@@ -1,4 +1,8 @@
 import React from "react";
+import play from "./play.png";
+import pause from "./pause.png";
+import stop from "./stop.png";
+import restart from "./restart.png";
 
 class Timer extends React.Component {
   state = {
@@ -67,10 +71,20 @@ class Timer extends React.Component {
       <div className="clock">
         <div>{this.getTime()}</div>
         <div>
-          <button onClick={this.startTimer}>Start</button>
-          <button onClick={this.stopTimer}>Stop</button>
-          <button onClick={this.pauseTimer}>Pause</button>
-          <button onClick={this.resetTimer}>Reset</button>
+          <button onClick={this.startTimer}>
+            {" "}
+            <img src={play} alt="play" height="15" width="15" />
+          </button>
+          <button onClick={this.stopTimer}>
+            <img src={stop} alt="play" height="15" width="15" />
+          </button>
+
+          <button onClick={this.pauseTimer}>
+            <img src={pause} alt="play" height="15" width="15" />
+          </button>
+          <button onClick={this.resetTimer}>
+            <img src={restart} alt="play" height="15" width="15" />
+          </button>
         </div>
       </div>
     );

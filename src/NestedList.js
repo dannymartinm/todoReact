@@ -1,14 +1,10 @@
 import React from "react";
 import MobileTearSheet from "./MobileTearSheet";
 import { List, ListItem } from "material-ui/List";
-import ActionGrade from "material-ui/svg-icons/action/grade";
-import ContentInbox from "material-ui/svg-icons/content/inbox";
-import ContentDrafts from "material-ui/svg-icons/content/drafts";
-import ContentSend from "material-ui/svg-icons/content/send";
 import Subheader from "material-ui/Subheader";
-import Toggle from "material-ui/Toggle";
-import DurationList from "./DurationList";
 import Timer from "./Timer";
+import editIcon from "./editIcon.png";
+import AddForm from "./AddForm";
 
 export default class ListExampleNested extends React.Component {
   constructor(props) {
@@ -23,6 +19,13 @@ export default class ListExampleNested extends React.Component {
     this.setState({
       open: item.state.open
     });
+  };
+
+  handleEdit = task => {
+    console.log(task);
+    // this.setState({
+    //   task
+    // });
   };
 
   render() {
@@ -54,6 +57,11 @@ export default class ListExampleNested extends React.Component {
                     className="listsubHeader"
                     key={1}
                     primaryText={task.description}
+                    rightIcon={
+                      <button className="iconButton" onClick={this.handleEdit}>
+                        <img src={editIcon} alt="play" height="20" width="20" />
+                      </button>
+                    }
                   />,
                   <Timer duration={task.duration} />
                 ]}
