@@ -3,6 +3,7 @@ import simpleId from "simple-id";
 import _ from "lodash";
 
 const initialState = {
+  editing: null,
   taskList: [1],
   tasks: {
     1: {
@@ -30,7 +31,6 @@ const handleAddTask = (state, { task }) => {
 
 const handleUpdateTask = (state, { task }) => {
   const { id, ...rest } = task;
-  console.log(task);
   return {
     ...state,
     taskList: [...state.taskList],
@@ -90,6 +90,13 @@ const handleDeleteTask = (state, { id }) => {
   };
 };
 
+const handleEditTask = (state, { id }) => {
+  return {
+    ...state,
+    editing: id
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.ADD_TASK:
@@ -102,6 +109,8 @@ const reducer = (state = initialState, action) => {
       return handleTaskCompleted(state, action.payload);
     case types.MOVE_TASK:
       return handleMoveTask(state, action.payload);
+    case types.EDIT_TASK:
+      return handleEditTask(state, action.payload);
     default:
       return state;
   }

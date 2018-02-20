@@ -35,3 +35,8 @@ export const taskCompleted = id => ({
     id
   }
 });
+
+export const editTask = id => ({
+  type: types.EDIT_TASK,
+  payload: { id }
+});

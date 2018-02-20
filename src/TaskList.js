@@ -4,28 +4,16 @@ import { List, ListItem } from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import Timer from "./Timer";
 import editIcon from "./editIcon.png";
-import AddForm from "./AddForm";
 
-export default class ListExampleNested extends React.Component {
+export default class TaskList extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.tasks;
   }
-  state = {
-    open: false
-  };
+  state = { open: false };
 
   handleNestedListToggle = item => {
-    this.setState({
-      open: item.state.open
-    });
-  };
-
-  handleEdit = task => {
-    console.log(task);
-    // this.setState({
-    //   task
-    // });
+    this.setState({ open: item.state.open });
   };
 
   render() {
@@ -58,7 +46,12 @@ export default class ListExampleNested extends React.Component {
                     key={1}
                     primaryText={task.description}
                     rightIcon={
-                      <button className="iconButton" onClick={this.handleEdit}>
+                      <button
+                        className="iconButton"
+                        onClick={() => {
+                          this.props.onEditSelect(task.id);
+                        }}
+                      >
                         <img src={editIcon} alt="play" height="20" width="20" />
                       </button>
                     }

@@ -16,11 +16,11 @@ class AddForm extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(this.props.task);
+    if (this.props.editing) this.setState(this.props.task);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(nextProps.task);
+    this.setState(nextProps.editing);
   }
 
   handleChange = e => {
@@ -34,20 +34,33 @@ class AddForm extends React.Component {
       duration
     });
   };
+
+  handleEditChange = (id, name, description, duration) => {
+    this.props.onEditTask(id, name, description, duration);
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-
     const { name, description, duration } = this.state;
-    this.props.onNewTask(name, description, duration);
 
+    if (this.props.editing != null) {
+      this.props.onEditTask(this.props.editing.id, name, description, duration);
+    } else {
+      this.props.onNewTask(name, description, duration);
+    }
     this.setState(emptyTask);
   };
 
   render() {
     const { name, description, duration } = this.state;
     const { durations } = this.props;
+
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={this.handleSubmit}
+        // onSubmit={editing => (editing ? console.log("hol") : this.handleSubmit)}
+      >
+        <pre>{JSON.stringify(this.props.editedTask, null, 2)}</pre>
         <div>{/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}</div>
         <h2 className="titleForm">New Task </h2>
         <TextField
@@ -77,9 +90,7 @@ class AddForm extends React.Component {
           value={duration}
         />
         <br />
-        <button className="formButton" type="submit">
-          Save
-        </button>
+        <button>Save</button>
       </form>
     );
   }

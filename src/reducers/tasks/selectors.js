@@ -6,12 +6,21 @@ import _ from "lodash";
 
 // returns a list with all the task objects
 const getTaskList = state => {
-  return _.map(state.taskList, id => ({
-    id,
-    ...state.tasks[id]
-  }));
+  return _.map(state.taskList, id => getTask(state, id));
+};
+
+const getTask = (state, id) => {
+  // falta manjear cuándo no ése id no existe
+  const foundTask = state.tasks[id];
+  return foundTask ? { id, ...foundTask } : null;
+};
+
+const getEditedTask = state => {
+  const { editing } = state;
+  return editing ? getTask(state, editing) : null;
 };
 
 export default {
-  getTaskList
+  getTaskList,
+  getEditedTask
 };

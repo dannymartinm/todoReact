@@ -1,36 +1,37 @@
 import React, { Component } from "react";
 import logo from "./todocheck.png";
 import "./App.css";
-import NestedList from "./NestedList";
+import TaskList from "./TaskList";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AddForm from "./AddForm";
 import { connect } from "react-redux";
 import { selectors } from "./reducers/tasks";
+import * as action from "./reducers/tasks/actions";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [
-        {
-          id: 1,
-          name: "Task 1",
-          description: "Read React Documentation",
-          duration: 1200
-        },
-        {
-          id: 2,
-          name: "Task 2",
-          description: "Do Use Cases Diagrams",
-          duration: 5400
-        },
-        {
-          id: 3,
-          name: "Task 3",
-          description: "Identify Components",
-          duration: 2700
-        }
-      ],
+      // tasks: [
+      //   {
+      //     id: 1,
+      //     name: "Task 1",
+      //     description: "Read React Documentation",
+      //     duration: 1200
+      //   },
+      //   {
+      //     id: 2,
+      //     name: "Task 2",
+      //     description: "Do Use Cases Diagrams",
+      //     duration: 5400
+      //   },
+      //   {
+      //     id: 3,
+      //     name: "Task 3",
+      //     description: "Identify Components",
+      //     duration: 2700
+      //   }
+      // ],
       durations: [
         {
           name: "Short",
@@ -48,20 +49,26 @@ class App extends Component {
     };
 
     this.addTask = this.addTask.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
 
   addTask(name, description, duration) {
-    const id = this.state.tasks.length + 1;
-
     if (duration === undefined) {
       duration = this.state.durations[0].seconds;
     }
-    const tasks = [...this.state.tasks, { id, name, description, duration }];
-    this.setState({ tasks });
+    const task = { name, description, duration };
+    this.props.onSubmit(task);
+  }
+
+  editTask(id, name, description, duration) {
+    const task = { id, name, description, duration };
+    console.log(task);
+    this.props.onEdit(task);
   }
   render() {
-    const { tasks } = this.props;
+    const { tasks, editedTask } = this.props;
     const { durations } = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -70,13 +77,18 @@ class App extends Component {
         </header>
         <div className="formContainer">
           <MuiThemeProvider>
-            <AddForm onNewTask={this.addTask} durations={durations} />
+            <AddForm
+              editing={editedTask}
+              onNewTask={this.addTask}
+              durations={durations}
+              onEditTask={this.editTask}
+            />
           </MuiThemeProvider>
         </div>
 
         <div className="listContainer">
           <MuiThemeProvider>
-            <NestedList tasks={tasks} />
+            <TaskList tasks={tasks} onEditSelect={this.props.onEditSelect} />
           </MuiThemeProvider>
         </div>
       </div>
@@ -85,11 +97,29 @@ class App extends Component {
 }
 
 /**
- * - importar action creators del reducer a éste componetne
+ * - importar action creators del reducer a éste componente
  * - escribir mapDispatchToProps para que emita acciones con 'addTask'
  * - en onNewTask, llamar a props.addTask para despachar la acción
  */
 
-const withRedux = connect(state => ({ tasks: selectors.getTaskList(state) }));
+const withRedux = connect(
+  state => ({
+    tasks: selectors.getTaskList(state),
+    editedTask: selectors.getEditedTask(state)
+  }),
+  dispatch => {
+    return {
+      onSubmit: task => {
+        dispatch(action.addTask(task));
+      },
+      onEdit: task => {
+        dispatch(action.updateTask(task));
+      },
+      onEditSelect: id => {
+        dispatch(action.editTask(id));
+      }
+    };
+  }
+);
 
 export default withRedux(App);
