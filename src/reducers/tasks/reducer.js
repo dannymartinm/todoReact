@@ -28,14 +28,61 @@ const handleAddTask = (state, { task }) => {
   };
 };
 
-const handleDeleteTask = (state, { id }) => {
-  const deleteTask = (arrayList, id) => {
-    const newTasksList = _.filter(arrayList, function(task) {
-      return task !== id;
-    });
-    return newTasksList;
+const handleUpdateTask = (state, { task }) => {
+  const { id, ...rest } = task;
+  console.log(task);
+  return {
+    ...state,
+    taskList: [...state.taskList],
+    tasks: {
+      ...state.tasks,
+      [id]: _.merge({}, state.tasks[id], rest)
+    }
   };
+};
 
+const handleTaskCompleted = (state, { id }) => {
+  const task = { ..._.get(state.tasks, id), completed: true };
+  return {
+    ...state,
+    taskList: _.remove(state.taskList, id),
+    tasks: {
+      ...state.tasks,
+      [id]: task
+    }
+  };
+};
+
+const handleMoveTask = (state, { id, index }) => {
+  console.log(id, index);
+  const i = state.taskList.indexOf(id);
+  const item = state.taskList[index];
+
+  const beforeItem = _.slice(state.taskList, 0, index);
+  const afterItem = _.slice(state.taskList, index + 1, state.taskList.length);
+
+  const withoutId = array => _.filter(array, e => e !== id);
+
+  console.log("before =>", beforeItem, withoutId(beforeItem));
+  console.log("after =>", afterItem, withoutId(afterItem));
+
+  const newList = _.concat(
+    withoutId(beforeItem),
+    [id],
+    [item],
+    withoutId(afterItem)
+  );
+
+  console.log(newList);
+  return {
+    ...state,
+    taskList: newList
+  };
+};
+
+const handleDeleteTask = (state, { id }) => {
+  const deleteTask = (arrayList, id) =>
+    _.filter(arrayList, task => task !== id);
   return {
     ...state,
     taskList: deleteTask(state.taskList, id),
@@ -49,6 +96,12 @@ const reducer = (state = initialState, action) => {
       return handleAddTask(state, action.payload);
     case types.DELETE_TASK:
       return handleDeleteTask(state, action.payload);
+    case types.UPDATE_TASK:
+      return handleUpdateTask(state, action.payload);
+    case types.TASK_COMPLETED:
+      return handleTaskCompleted(state, action.payload);
+    case types.MOVE_TASK:
+      return handleMoveTask(state, action.payload);
     default:
       return state;
   }

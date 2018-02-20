@@ -4,10 +4,8 @@ import "./App.css";
 import NestedList from "./NestedList";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import AddForm from "./AddForm";
-
-const style = {
-  margin: 12
-};
+import { connect } from "react-redux";
+import { selectors } from "./reducers/tasks";
 
 class App extends Component {
   constructor(props) {
@@ -62,7 +60,7 @@ class App extends Component {
     this.setState({ tasks });
   }
   render() {
-    const { tasks } = this.state;
+    const { tasks } = this.props;
     const { durations } = this.state;
     return (
       <div className="App">
@@ -86,4 +84,12 @@ class App extends Component {
   }
 }
 
-export default App;
+/**
+ * - importar action creators del reducer a éste componetne
+ * - escribir mapDispatchToProps para que emita acciones con 'addTask'
+ * - en onNewTask, llamar a props.addTask para despachar la acción
+ */
+
+const withRedux = connect(state => ({ tasks: selectors.getTaskList(state) }));
+
+export default withRedux(App);
