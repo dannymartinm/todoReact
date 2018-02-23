@@ -7,7 +7,6 @@ import restart from "./restart.png";
 class Timer extends React.Component {
   state = {
     currentT: 0,
-    duration: this.props.duration,
     interval: null,
     initialTime: null
   };
@@ -17,7 +16,7 @@ class Timer extends React.Component {
   startTimer = () => {
     if (
       this.state.interval === null &&
-      this.state.currentT < this.state.duration
+      this.state.currentT < this.props.duration
     ) {
       const interval = setInterval(() => {
         this.setState({ currentT: this.state.currentT + 1 });
@@ -29,10 +28,7 @@ class Timer extends React.Component {
 
   stopTimer = () => {
     clearInterval(this.state.interval);
-    this.setState({
-      interval: null,
-      currentT: this.state.duration
-    });
+    this.setState({ interval: null, currentT: this.props.duration });
   };
 
   pauseTimer = () => {
@@ -51,7 +47,7 @@ class Timer extends React.Component {
   };
 
   getTime = () => {
-    const counter = this.state.duration - this.state.currentT;
+    const counter = this.props.duration - this.state.currentT;
 
     const hours = Math.floor(counter / 3600);
     const minutes = Math.floor((counter % 3600) / 60);

@@ -12,26 +12,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // tasks: [
-      //   {
-      //     id: 1,
-      //     name: "Task 1",
-      //     description: "Read React Documentation",
-      //     duration: 1200
-      //   },
-      //   {
-      //     id: 2,
-      //     name: "Task 2",
-      //     description: "Do Use Cases Diagrams",
-      //     duration: 5400
-      //   },
-      //   {
-      //     id: 3,
-      //     name: "Task 3",
-      //     description: "Identify Components",
-      //     duration: 2700
-      //   }
-      // ],
       durations: [
         {
           name: "Short",
@@ -62,7 +42,7 @@ class App extends Component {
 
   editTask(id, name, description, duration) {
     const task = { id, name, description, duration };
-    console.log(task);
+
     this.props.onEdit(task);
   }
   render() {

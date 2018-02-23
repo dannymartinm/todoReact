@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
 class Task extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { name, description, duration } = this.props;
     return (

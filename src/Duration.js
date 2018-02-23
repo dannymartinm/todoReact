@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
 class Duration extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { name, seconds } = this.props;
     return (
