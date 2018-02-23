@@ -9,6 +9,10 @@ const getTaskList = state => {
   return _.map(state.taskList, id => getTask(state, id));
 };
 
+const getDurationList = state => {
+  return _.map(state.durations);
+};
+
 const getTask = (state, id) => {
   // falta manjear cuándo no ése id no existe
   const foundTask = state.tasks[id];
@@ -22,5 +26,6 @@ const getEditedTask = state => {
 
 export default {
   getTaskList,
-  getEditedTask
+  getEditedTask,
+  getDurationList
 };

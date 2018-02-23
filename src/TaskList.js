@@ -4,6 +4,8 @@ import { List, ListItem } from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import Timer from "./Timer";
 import editIcon from "./editIcon.png";
+import checkIcon from "./checkIcon.png";
+import deleteIcon from "./deleteIcon.png";
 
 export default class TaskList extends React.Component {
   constructor(props) {
@@ -56,7 +58,22 @@ export default class TaskList extends React.Component {
                       </button>
                     }
                   />,
-                  <Timer duration={task.duration} />
+                  <Timer duration={task.duration} />,
+
+                  <div>
+                    <br />
+                    <button
+                      className="deleteIcon"
+                      onClick={() => {
+                        this.props.onDeleteTask(task.id);
+                      }}
+                    >
+                      <img src={deleteIcon} alt="play" height="20" width="20" />
+                    </button>
+                    <button className="checkIcon">
+                      <img src={checkIcon} alt="play" height="20" width="20" />
+                    </button>
+                  </div>
                 ]}
               />
             ))}

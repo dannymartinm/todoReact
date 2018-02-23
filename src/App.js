@@ -11,30 +11,14 @@ import * as action from "./reducers/tasks/actions";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      durations: [
-        {
-          name: "Short",
-          seconds: 1800
-        },
-        {
-          name: "Medium",
-          seconds: 3600
-        },
-        {
-          name: "Long",
-          seconds: 7200
-        }
-      ]
-    };
-
     this.addTask = this.addTask.bind(this);
     this.editTask = this.editTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   addTask(name, description, duration) {
     if (duration === undefined) {
-      duration = this.state.durations[0].seconds;
+      duration = this.props.durations[0].seconds;
     }
     const task = { name, description, duration };
     this.props.onSubmit(task);
@@ -45,9 +29,12 @@ class App extends Component {
 
     this.props.onEdit(task);
   }
+
+  deleteTask(id) {
+    this.props.onDelete(id);
+  }
   render() {
-    const { tasks, editedTask } = this.props;
-    const { durations } = this.state;
+    const { tasks, editedTask, durations } = this.props;
 
     return (
       <div className="App">
@@ -68,7 +55,11 @@ class App extends Component {
 
         <div className="listContainer">
           <MuiThemeProvider>
-            <TaskList tasks={tasks} onEditSelect={this.props.onEditSelect} />
+            <TaskList
+              tasks={tasks}
+              onEditSelect={this.props.onEditSelect}
+              onDeleteTask={this.deleteTask}
+            />
           </MuiThemeProvider>
         </div>
       </div>
@@ -76,16 +67,11 @@ class App extends Component {
   }
 }
 
-/**
- * - importar action creators del reducer a éste componente
- * - escribir mapDispatchToProps para que emita acciones con 'addTask'
- * - en onNewTask, llamar a props.addTask para despachar la acción
- */
-
 const withRedux = connect(
   state => ({
     tasks: selectors.getTaskList(state),
-    editedTask: selectors.getEditedTask(state)
+    editedTask: selectors.getEditedTask(state),
+    durations: selectors.getDurationList(state)
   }),
   dispatch => {
     return {
@@ -97,6 +83,9 @@ const withRedux = connect(
       },
       onEditSelect: id => {
         dispatch(action.editTask(id));
+      },
+      onDelete: id => {
+        dispatch(action.deleteTask(id));
       }
     };
   }

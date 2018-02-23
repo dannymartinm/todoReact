@@ -13,7 +13,21 @@ const initialState = {
       elapsedTime: 0,
       completed: false
     }
-  }
+  },
+  durations: [
+    {
+      name: "Short",
+      seconds: 1800
+    },
+    {
+      name: "Medium",
+      seconds: 3600
+    },
+    {
+      name: "Long",
+      seconds: 7200
+    }
+  ]
 };
 
 const handleAddTask = (state, { task }) => {

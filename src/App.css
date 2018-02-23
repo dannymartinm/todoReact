@@ -48,6 +48,18 @@
   border: none;
 }
 
+.deleteIcon {
+  border: none;
+  /* background: linear-gradient(brown, red);
+  -webkit-filter: brightness(200%); /* Safari 
+  filter: brightness(200%); */
+}
+
+.checkIcon {
+  border: none;
+  color: red;
+}
+
 /* body {
   font-family: "Roboto", sans-serif;
 }
