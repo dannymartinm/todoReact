@@ -71,6 +71,7 @@ class App extends Component {
                 onEditSelect={this.props.onEditSelect}
                 onDeleteTask={this.deleteTask}
                 onTaskCompleted={this.taskCompleted}
+                onMoveTask={this.props.onMoveTask}
               />
             </MuiThemeProvider>
           </div>
@@ -82,7 +83,7 @@ class App extends Component {
         </div>
 
         {/* <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre> */}
-        {/* <pre>tasks{JSON.stringify(tasks, null, 2)}</pre> */}
+        <pre>tasks{JSON.stringify(tasks, null, 2)}</pre>
       </div>
     );
   }
@@ -111,6 +112,9 @@ const withRedux = connect(
       },
       onTaskCompleted: (id, elapsedTime) => {
         dispatch(action.taskCompleted(id, elapsedTime));
+      },
+      onMoveTask: (index, id) => {
+        dispatch(action.moveTask(index, id));
       }
     };
   }

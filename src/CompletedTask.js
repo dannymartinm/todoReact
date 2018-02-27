@@ -4,7 +4,6 @@ import { List, ListItem } from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import Divider from "material-ui/Divider";
 import { darkBlack } from "material-ui/styles/colors";
-
 export default class TaskList extends React.Component {
   state = { open: false };
 
@@ -52,20 +51,22 @@ export default class TaskList extends React.Component {
           <List>
             <Subheader>Completed Tasks</Subheader>
             {completedTasks.map(task => (
-              <ListItem
-                primaryText={task.name}
-                secondaryText={
-                  <p>
-                    <span style={{ color: darkBlack }}>
-                      {task.elapsedTime} mins
-                    </span>
-                    -- {task.description}
-                  </p>
-                }
-                secondaryTextLines={2}
-              />
+              <div>
+                <ListItem
+                  primaryText={task.name}
+                  secondaryText={
+                    <p>
+                      <span style={{ color: darkBlack }}>
+                        {task.elapsedTime} mins
+                      </span>
+                      -- {task.description}
+                    </p>
+                  }
+                  secondaryTextLines={2}
+                />
+                <Divider inset={true} />
+              </div>
             ))}
-            <Divider inset={true} />
           </List>
         </MobileTearSheet>
       </div>

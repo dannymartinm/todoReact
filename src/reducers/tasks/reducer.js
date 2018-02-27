@@ -74,8 +74,8 @@ const handleTaskCompleted = (state, { id, elapsedTime }) => {
   };
 };
 
-const handleMoveTask = (state, { id, index }) => {
-  console.log(id, index);
+const handleMoveTask = (state, { index, id }) => {
+  console.log("reducer", index, id);
   const i = state.taskList.indexOf(id);
   const item = state.taskList[index];
 
