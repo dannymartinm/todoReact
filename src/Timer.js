@@ -8,10 +8,9 @@ class Timer extends React.Component {
   state = {
     currentT: 0,
     interval: null,
-    initialTime: null
+    initialTime: null,
+    elapsedTime: 0
   };
-
-  componentDidMount() {}
 
   startTimer = () => {
     if (
@@ -28,24 +27,35 @@ class Timer extends React.Component {
 
   stopTimer = () => {
     clearInterval(this.state.interval);
-    this.setState({ interval: null, currentT: this.props.duration });
+    this.setState({
+      interval: null,
+      currentT: this.props.duration,
+      elapsedTime: 0
+    });
   };
 
   pauseTimer = () => {
     clearInterval(this.state.interval);
     this.setState({
-      interval: null
+      interval: null,
+      elapsedTime: this.state.currentT
     });
+    this.props.onElapsedTime(Math.round(this.state.currentT / 60 * 100) / 100);
   };
 
   resetTimer = () => {
     clearInterval(this.state.interval);
     this.setState({
       currentT: 0,
-      interval: null
+      interval: null,
+      elapsedTime: 0
     });
   };
 
+  getElapsedTime = () => {
+    const elapsedTime = this.state.currentT;
+    console.log(elapsedTime);
+  };
   getTime = () => {
     const counter = this.props.duration - this.state.currentT;
 
@@ -61,16 +71,11 @@ class Timer extends React.Component {
       seconds
     )}`;
   };
-  handleTime = () => {
-    var time = this.getTime();
-    this.props.onElapsedTime(time);
-  };
 
   render() {
-    const time = this.getTime();
     return (
       <div className="clock">
-        <div>{time}</div>
+        <div>{this.getTime()}</div>
         <div>
           <button onClick={this.startTimer}>
             {" "}
@@ -83,7 +88,7 @@ class Timer extends React.Component {
           <button onClick={this.pauseTimer}>
             <img src={pause} alt="play" height="15" width="15" />
           </button>
-          <button onClick={this.handleTime}>
+          <button onClick={this.resetTimer}>
             <img src={restart} alt="play" height="15" width="15" />
           </button>
         </div>

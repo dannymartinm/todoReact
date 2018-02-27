@@ -64,22 +64,25 @@ class App extends Component {
         </div>
 
         <div className="listContainer">
-          <MuiThemeProvider>
-            <TaskList
-              tasks={tasks}
-              onEditSelect={this.props.onEditSelect}
-              onDeleteTask={this.deleteTask}
-              onTaskCompleted={this.taskCompleted}
-            />
-          </MuiThemeProvider>
+          <div className="tasksListContainer">
+            <MuiThemeProvider>
+              <TaskList
+                tasks={tasks}
+                onEditSelect={this.props.onEditSelect}
+                onDeleteTask={this.deleteTask}
+                onTaskCompleted={this.taskCompleted}
+              />
+            </MuiThemeProvider>
+          </div>
+          <div className="completedContainer">
+            <MuiThemeProvider>
+              <CompletedTask completedTasks={completedTasks} />
+            </MuiThemeProvider>
+          </div>
         </div>
-        <div>
-          <MuiThemeProvider className="completedContainer">
-            <CompletedTask completedTasks={completedTasks} />
-          </MuiThemeProvider>
-        </div>
+
         {/* <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre> */}
-        <pre>tasks{JSON.stringify(tasks, null, 2)}</pre>
+        {/* <pre>tasks{JSON.stringify(tasks, null, 2)}</pre> */}
       </div>
     );
   }
