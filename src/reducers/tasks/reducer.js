@@ -10,7 +10,7 @@ const initialState = {
       name: "Task Redux",
       description: "Learning Redux",
       duration: 3600,
-      elapsedTime: 1,
+      elapsedTime: 2,
       completed: false
     }
   },
@@ -57,8 +57,12 @@ const handleUpdateTask = (state, { task }) => {
   };
 };
 
-const handleTaskCompleted = (state, { id }) => {
-  const task = { ..._.get(state.tasks, id), completed: true };
+const handleTaskCompleted = (state, { id, elapsedTime }) => {
+  const task = {
+    ..._.get(state.tasks, id),
+    completed: true,
+    elapsedTime: elapsedTime
+  };
 
   return {
     ...state,

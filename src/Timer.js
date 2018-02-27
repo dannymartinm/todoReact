@@ -61,11 +61,16 @@ class Timer extends React.Component {
       seconds
     )}`;
   };
+  handleTime = () => {
+    var time = this.getTime();
+    this.props.onElapsedTime(time);
+  };
 
   render() {
+    const time = this.getTime();
     return (
       <div className="clock">
-        <div>{this.getTime()}</div>
+        <div>{time}</div>
         <div>
           <button onClick={this.startTimer}>
             {" "}
@@ -78,7 +83,7 @@ class Timer extends React.Component {
           <button onClick={this.pauseTimer}>
             <img src={pause} alt="play" height="15" width="15" />
           </button>
-          <button onClick={this.resetTimer}>
+          <button onClick={this.handleTime}>
             <img src={restart} alt="play" height="15" width="15" />
           </button>
         </div>

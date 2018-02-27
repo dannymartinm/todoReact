@@ -8,18 +8,24 @@ import checkIcon from "./checkIcon.png";
 import deleteIcon from "./deleteIcon.png";
 
 export default class TaskList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.tasks;
-  }
-  state = { open: false };
+  state = { open: false, time: 0 };
 
   handleNestedListToggle = item => {
     this.setState({ open: item.state.open });
   };
 
+  handleCompleted = id => {
+    const aux = this.state.time;
+    this.props.onTaskCompleted(id, aux);
+  };
+
+  handleGetTime = aux => {
+    console.log("timetasks", aux);
+    this.setState({ time: aux });
+  };
   render() {
     const { tasks } = this.props;
+
     return (
       <div>
         <br />
@@ -58,7 +64,10 @@ export default class TaskList extends React.Component {
                       </button>
                     }
                   />,
-                  <Timer duration={task.duration} />,
+                  <Timer
+                    duration={task.duration}
+                    onElapsedTime={this.handleGetTime}
+                  />,
 
                   <div>
                     <br />
@@ -73,7 +82,7 @@ export default class TaskList extends React.Component {
                     <button
                       className="checkIcon"
                       onClick={() => {
-                        this.props.onTaskCompleted(task.id);
+                        this.handleCompleted(task.id);
                       }}
                     >
                       <img src={checkIcon} alt="play" height="20" width="20" />

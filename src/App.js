@@ -38,10 +38,9 @@ class App extends Component {
     this.props.onDelete(id);
   }
 
-  taskCompleted = id => {
-    console.log("id", id);
-    this.props.onTaskCompleted(id);
-    console.log("Apptasks", this.props.tasks);
+  taskCompleted = (id, elapsedTime) => {
+    console.log(elapsedTime);
+    this.props.onTaskCompleted(id, elapsedTime);
   };
 
   render() {
@@ -107,8 +106,8 @@ const withRedux = connect(
       onDelete: id => {
         dispatch(action.deleteTask(id));
       },
-      onTaskCompleted: id => {
-        dispatch(action.taskCompleted(id));
+      onTaskCompleted: (id, elapsedTime) => {
+        dispatch(action.taskCompleted(id, elapsedTime));
       }
     };
   }

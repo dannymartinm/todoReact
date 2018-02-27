@@ -29,10 +29,11 @@ export const moveTask = (index, id) => ({
   }
 });
 
-export const taskCompleted = id => ({
+export const taskCompleted = (id, elapsedTime) => ({
   type: types.TASK_COMPLETED,
   payload: {
-    id
+    id,
+    elapsedTime
   }
 });
 
