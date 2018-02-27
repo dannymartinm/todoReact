@@ -7,13 +7,13 @@ import _ from "lodash";
 // returns a list with all the task objects
 
 const getTaskList = state => {
+  console.log("selector", state.taskList);
   return _.map(state.taskList, id => getTask(state, id));
 };
 
 const getTask = (state, id) => {
   // falta manjear cuándo no ése id no existe
   const foundTask = state.tasks[id];
-  console.log("foundtask", foundTask);
   return foundTask ? { id, ...foundTask } : null;
 };
 const getDurationList = state => {
@@ -21,7 +21,8 @@ const getDurationList = state => {
 };
 
 const getCompletedTaskList = state => {
-  return _.filter(state.tasks, task => task.completed);
+  const completedTasks = _.filter(state.tasks, task => task.completed);
+  return completedTasks;
 };
 
 const getEditedTask = state => {

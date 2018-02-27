@@ -10,7 +10,7 @@ const initialState = {
       name: "Task Redux",
       description: "Learning Redux",
       duration: 3600,
-      elapsedTime: 0,
+      elapsedTime: 1,
       completed: false
     }
   },
@@ -29,6 +29,8 @@ const initialState = {
     }
   ]
 };
+
+const deleteTask = (arrayList, id) => _.filter(arrayList, task => task !== id);
 
 const handleAddTask = (state, { task }) => {
   const id = simpleId();
@@ -57,9 +59,10 @@ const handleUpdateTask = (state, { task }) => {
 
 const handleTaskCompleted = (state, { id }) => {
   const task = { ..._.get(state.tasks, id), completed: true };
+
   return {
     ...state,
-    taskList: _.remove(state.taskList, id),
+    taskList: deleteTask(state.taskList, id),
     tasks: {
       ...state.tasks,
       [id]: task
@@ -95,8 +98,6 @@ const handleMoveTask = (state, { id, index }) => {
 };
 
 const handleDeleteTask = (state, { id }) => {
-  const deleteTask = (arrayList, id) =>
-    _.filter(arrayList, task => task !== id);
   return {
     ...state,
     taskList: deleteTask(state.taskList, id),

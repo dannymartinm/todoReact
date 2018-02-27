@@ -39,7 +39,9 @@ class App extends Component {
   }
 
   taskCompleted = id => {
+    console.log("id", id);
     this.props.onTaskCompleted(id);
+    console.log("Apptasks", this.props.tasks);
   };
 
   render() {
@@ -73,9 +75,11 @@ class App extends Component {
           </MuiThemeProvider>
         </div>
         <div>
-          <CompletedTask completedTasks={completedTasks} />
+          <MuiThemeProvider className="completedContainer">
+            <CompletedTask completedTasks={completedTasks} />
+          </MuiThemeProvider>
         </div>
-        <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre>
+        {/* <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre> */}
         <pre>tasks{JSON.stringify(tasks, null, 2)}</pre>
       </div>
     );
