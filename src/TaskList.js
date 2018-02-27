@@ -70,7 +70,12 @@ export default class TaskList extends React.Component {
                     >
                       <img src={deleteIcon} alt="play" height="20" width="20" />
                     </button>
-                    <button className="checkIcon">
+                    <button
+                      className="checkIcon"
+                      onClick={() => {
+                        this.props.onTaskCompleted(task.id);
+                      }}
+                    >
                       <img src={checkIcon} alt="play" height="20" width="20" />
                     </button>
                   </div>

@@ -7,6 +7,7 @@ import AddForm from "./AddForm";
 import { connect } from "react-redux";
 import { selectors } from "./reducers/tasks";
 import * as action from "./reducers/tasks/actions";
+import CompletedTask from "./CompletedTask";
 
 class App extends Component {
   constructor(props) {
@@ -14,13 +15,16 @@ class App extends Component {
     this.addTask = this.addTask.bind(this);
     this.editTask = this.editTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.taskCompleted = this.taskCompleted.bind(this);
   }
 
   addTask(name, description, duration) {
     if (duration === undefined) {
       duration = this.props.durations[0].seconds;
     }
-    const task = { name, description, duration };
+    const completed = false;
+    const elapsedTime = 0;
+    const task = { name, description, duration, elapsedTime, completed };
     this.props.onSubmit(task);
   }
 
@@ -33,8 +37,13 @@ class App extends Component {
   deleteTask(id) {
     this.props.onDelete(id);
   }
+
+  taskCompleted = id => {
+    this.props.onTaskCompleted(id);
+  };
+
   render() {
-    const { tasks, editedTask, durations } = this.props;
+    const { tasks, editedTask, durations, completedTasks } = this.props;
 
     return (
       <div className="App">
@@ -59,9 +68,15 @@ class App extends Component {
               tasks={tasks}
               onEditSelect={this.props.onEditSelect}
               onDeleteTask={this.deleteTask}
+              onTaskCompleted={this.taskCompleted}
             />
           </MuiThemeProvider>
         </div>
+        <div>
+          <CompletedTask completedTasks={completedTasks} />
+        </div>
+        <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre>
+        <pre>tasks{JSON.stringify(tasks, null, 2)}</pre>
       </div>
     );
   }
@@ -71,7 +86,8 @@ const withRedux = connect(
   state => ({
     tasks: selectors.getTaskList(state),
     editedTask: selectors.getEditedTask(state),
-    durations: selectors.getDurationList(state)
+    durations: selectors.getDurationList(state),
+    completedTasks: selectors.getCompletedTaskList(state)
   }),
   dispatch => {
     return {
@@ -86,6 +102,9 @@ const withRedux = connect(
       },
       onDelete: id => {
         dispatch(action.deleteTask(id));
+      },
+      onTaskCompleted: id => {
+        dispatch(action.taskCompleted(id));
       }
     };
   }
