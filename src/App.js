@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { selectors } from "./reducers/tasks";
 import * as action from "./reducers/tasks/actions";
 import CompletedTask from "./CompletedTask";
+import Filter from "./Filter";
 
 class App extends Component {
   constructor(props) {
@@ -83,7 +84,6 @@ class App extends Component {
         </div>
 
         {/* <pre>completed{JSON.stringify(completedTasks, null, 2)}</pre> */}
-        <pre>tasks{JSON.stringify(tasks, null, 2)}</pre>
       </div>
     );
   }

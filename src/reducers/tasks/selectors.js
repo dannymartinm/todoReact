@@ -30,9 +30,15 @@ const getEditedTask = state => {
   return editing ? getTask(state, editing) : null;
 };
 
+const getFilterList = state => {
+  const filteredArray = _.filter(state.tasks, task => task.duration);
+  return filteredArray;
+};
+
 export default {
   getTaskList,
   getEditedTask,
   getDurationList,
-  getCompletedTaskList
+  getCompletedTaskList,
+  getFilterList
 };

@@ -1,16 +1,62 @@
 import React from "react";
 import MobileTearSheet from "./MobileTearSheet";
 import { List, ListItem } from "material-ui/List";
-import Subheader from "material-ui/Subheader";
 import Timer from "./Timer";
 import editIcon from "./editIcon.png";
 import checkIcon from "./checkIcon.png";
 import deleteIcon from "./deleteIcon.png";
 import swapIcon from "./swap.png";
 import _ from "lodash";
+import AutoComplete from "material-ui/AutoComplete";
+const durations = ["Short", "Medium", "Long"];
 
 export default class TaskList extends React.Component {
   state = { open: false, time: 0 };
+  constructor(props) {
+    super(props);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
+  onInputChange = searchText => {
+    if (searchText === "") {
+      this.setState({
+        searchItem: searchText,
+        currentlyDisplayed: this.props.tasks
+      });
+      console.log("state", this.state.currentlyDisplayed);
+      console.log("props", this.props.tasks);
+    }
+    switch (searchText) {
+      default:
+        return 0;
+      case "Short":
+        searchText = 1800;
+        break;
+      case "Medium":
+        searchText = 3600;
+        break;
+      case "Long":
+        searchText = 7200;
+        break;
+    }
+    const newlyDisplayed = _.filter(
+      this.props.tasks,
+      task => task.duration === Number(searchText)
+    );
+    this.setState({
+      searchItem: searchText,
+      currentlyDisplayed: newlyDisplayed
+    });
+  };
+
+  componentWillMount() {
+    this.setState({
+      searchItem: "",
+      currentlyDisplayed: this.props.tasks
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ searchItem: "", currentlyDisplayed: nextProps.tasks });
+  }
 
   handleCompleted = id => {
     const aux = this.state.time;
@@ -26,28 +72,37 @@ export default class TaskList extends React.Component {
       return task.id === id;
     });
 
-    if (currentIndex === 0) {
-      if (this.props.tasks.length === 1) {
-        console.log("unica tarea");
-      } else {
-        this.props.onMoveTask(currentIndex + 1, id);
-      }
-    } else if (currentIndex === this.props.tasks.length - 1) {
-      console.log("CI", currentIndex);
-      this.props.onMoveTask(currentIndex - 1, id);
-    } else {
-      this.props.onMoveTask(currentIndex + 1, id);
-    }
+    // if (currentIndex === 0) {
+    //   if (this.props.tasks.length === 1) {
+    //     console.log("unica tarea");
+    //   } else {
+    //     this.props.onMoveTask(currentIndex + 1, id);
+    //   }
+    // } else if (currentIndex === this.props.tasks.length - 1) {
+    //   console.log("CI", currentIndex);
+    //   this.props.onMoveTask(currentIndex - 1, id);
+    // } else {
+    //   this.props.onMoveTask(currentIndex + 1, id);
+    // }
   };
   render() {
-    const { tasks } = this.props;
+    const tasks = this.state.currentlyDisplayed;
 
     return (
       <div>
         <br />
         <MobileTearSheet>
+          <h2>To Do</h2>
+          <div>
+            <AutoComplete
+              floatingLabelText="Durations Filter"
+              filter={AutoComplete.caseInsensitiveFilter}
+              dataSource={durations}
+              onUpdateInput={this.onInputChange}
+            />
+            {/* <pre>{JSON.stringify(this.state.currentlyDisplayed, null, 2)}</pre> */}
+          </div>
           <List>
-            <Subheader>To Do List</Subheader>
             {tasks.map(task => (
               <div>
                 <ListItem

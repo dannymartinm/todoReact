@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 
+const durations = ["Short", "Medium", "Long"];
+
 export default class DurationList extends Component {
   state = {
     value: null

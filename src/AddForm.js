@@ -1,11 +1,16 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import DurationList from "./DurationList";
+import RaisedButton from "material-ui/RaisedButton";
 
 const emptyTask = {
   name: "",
   description: "",
   duration: undefined
+};
+
+const style = {
+  margin: 12
 };
 
 class AddForm extends React.Component {
@@ -48,7 +53,9 @@ class AddForm extends React.Component {
     } else {
       this.props.onNewTask(name, description, duration);
     }
+    console.log("edt", this.state);
     this.setState(emptyTask);
+    console.log("agt", this.state);
   };
 
   render() {
@@ -56,10 +63,7 @@ class AddForm extends React.Component {
     const { durations } = this.props;
 
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        // onSubmit={editing => (editing ? console.log("hol") : this.handleSubmit)}
-      >
+      <form onSubmit={this.handleSubmit}>
         <pre>{JSON.stringify(this.props.editedTask, null, 2)}</pre>
         <div>{/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}</div>
         <h2 className="titleForm">New Task </h2>
@@ -71,7 +75,6 @@ class AddForm extends React.Component {
           name="name"
           value={name}
         />
-
         <br />
         <TextField
           id="text-field"
@@ -89,8 +92,7 @@ class AddForm extends React.Component {
           onChange={this.handleDurationChange}
           value={duration}
         />
-        <br />
-        <button>Save</button>
+        <RaisedButton label="Save" primary={true} style={style} type="submit" />
       </form>
     );
   }
